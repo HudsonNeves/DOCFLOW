@@ -55,6 +55,8 @@ button { cursor: pointer; }
 .notification i { position: absolute; top: 7px; right: 7px; width: 7px; height: 7px; border-radius: 50%; background: #e34e4e; }
 .mobile-menu { display: none; border: 0; background: transparent; color: var(--navy); font-size: 21px; }
 .content { max-width: 1600px; margin: 0 auto; padding: 28px 30px 42px; }
+.site-footer { padding: 16px 30px; border-top: 1px solid var(--border); background: white; color: var(--muted); text-align: center; font-size: 11px; }
+.site-footer p { margin: 0; }
 .view { display: none; }
 .view.active { display: block; }
 .page-heading { margin-bottom: 23px; display: flex; align-items: center; justify-content: space-between; gap: 15px; }
