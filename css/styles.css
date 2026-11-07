@@ -181,6 +181,7 @@ h1 span { font-size: 20px; }
 .info-panel { margin-top: 15px; padding: 20px; }.info-panel p { color: var(--muted); font-size: 11px; line-height: 1.6; }
 .settings-panel { max-width: 600px; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
 .settings-panel label, .modal-form label { display: flex; flex-direction: column; gap: 7px; color: #45566c; font-size: 10px; font-weight: 700; }
+.field-hint { color: var(--muted); font-size: 9px; font-weight: 400; line-height: 1.5; }
 .settings-panel input:not([type=checkbox]), .modal-form input:not([type=file]) { width: 100%; padding: 10px 12px; border: 1px solid #dce3ec; border-radius: 8px; outline: 0; font-size: 11px; }
 .settings-panel input:focus, .modal-form input:focus { border-color: #6ca4d7; }
 .settings-panel .checkbox-label { flex-direction: row; align-items: center; font-weight: 500; }

@@ -3,7 +3,9 @@
   const $ = (selector, scope = document) => scope.querySelector(selector);
   const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
-  let documents = [
+  const STORAGE_KEY = "docflow-state-v1";
+
+  const initialDocuments = [
     { name: "Contrato de prestação de serviços.pdf", vendor: "Alfa Tecnologia", category: "Contratos", date: "06/11/2026", status: "Organizado" },
     { name: "Nota fiscal #2038.pdf", vendor: "Comercial Beta", category: "Notas fiscais", date: "06/11/2026", status: "Pendente" },
     { name: "Política de privacidade.docx", vendor: "Administrativo", category: "Documentos internos", date: "05/11/2026", status: "Organizado" },
@@ -12,7 +14,7 @@
     { name: "Nota fiscal #2037.pdf", vendor: "Fornecedor Delta", category: "Notas fiscais", date: "02/11/2026", status: "Organizado" }
   ];
 
-  let approvals = [
+  const initialApprovals = [
     { name: "Nota fiscal #2038.pdf", vendor: "Comercial Beta", date: "06/11/2026" },
     { name: "Recibo de pagamento.pdf", vendor: "João Martins", date: "04/11/2026" },
     { name: "Cadastro de fornecedor.pdf", vendor: "Fornecedor Gama", date: "03/11/2026" }
@@ -46,6 +48,64 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
   }
+
+  let documents = initialDocuments;
+  let approvals = initialApprovals;
+  let settings = {
+    companyName: "Minha Empresa Ltda.",
+    adminName: "Ana Costa",
+    notificationsEnabled: true
+  };
+
+  function loadState() {
+    let serialized;
+    try {
+      serialized = localStorage.getItem(STORAGE_KEY);
+    } catch (error) {
+      console.error("Não foi possível ler os dados locais do DOCFLOW.", error);
+      showToast("Não foi possível acessar o armazenamento deste navegador.");
+      return;
+    }
+    if (!serialized) return;
+
+    try {
+      const state = JSON.parse(serialized);
+      const validDocuments = Array.isArray(state.documents) && state.documents.every(doc =>
+        doc && ["name", "vendor", "category", "date", "status"].every(key => typeof doc[key] === "string")
+      );
+      const validApprovals = Array.isArray(state.approvals) && state.approvals.every(item =>
+        item && ["name", "vendor", "date"].every(key => typeof item[key] === "string")
+      );
+      const validSettings = state.settings &&
+        typeof state.settings.companyName === "string" &&
+        typeof state.settings.adminName === "string" &&
+        typeof state.settings.notificationsEnabled === "boolean";
+
+      if (!validDocuments || !validApprovals || !validSettings) {
+        throw new Error("Formato dos dados locais inválido.");
+      }
+
+      documents = state.documents;
+      approvals = state.approvals;
+      settings = state.settings;
+    } catch (error) {
+      console.error("Os dados locais do DOCFLOW estão inválidos.", error);
+      showToast("Não foi possível carregar os dados salvos; os dados de demonstração serão exibidos.");
+    }
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ documents, approvals, settings }));
+      return true;
+    } catch (error) {
+      console.error("Não foi possível salvar os dados locais do DOCFLOW.", error);
+      showToast("Não foi possível salvar neste navegador. Verifique o espaço disponível.");
+      return false;
+    }
+  }
+
+  loadState();
 
   function navigate(view) {
     $$(".view").forEach(section => section.classList.toggle("active", section.id === `view-${view}`));
@@ -127,6 +187,14 @@
       </div>`).join("");
   }
 
+  function renderSettings() {
+      $("#companyName").value = settings.companyName;
+      $("#adminName").value = settings.adminName;
+      $("#notificationsEnabled").checked = settings.notificationsEnabled;
+      $("#administratorGreeting").textContent = settings.adminName.split(/\s+/)[0] || "Ana";
+      $("#profileName").textContent = settings.adminName;
+  }
+
   function openModal() {
     $("#uploadModal").classList.add("open");
     $("#uploadModal").setAttribute("aria-hidden", "false");
@@ -160,13 +228,17 @@
     const name = typedName || (file ? file.name : "");
     documents.unshift({
       name, vendor: $("#newVendor").value.trim(), category: $("#newCategory").value,
-      date: "07/11/2026", status: "Organizado"
+      date: new Date().toLocaleDateString("pt-BR"), status: "Organizado"
     });
     $("#uploadForm").reset();
     closeModal();
     renderAll();
     navigate("documents");
-    showToast(file ? "Documento cadastrado no protótipo." : "Cadastro demonstrativo concluído.");
+    if (saveState()) {
+      showToast(file
+        ? "Documento cadastrado. Somente os dados e o nome do arquivo foram salvos neste navegador."
+        : "Documento cadastrado neste navegador.");
+    }
   });
 
   // Pesquisa e filtros
@@ -204,12 +276,12 @@
       const doc = documents.find(document => document.name === item.name);
       if (doc) doc.status = "Organizado";
       renderAll();
-      showToast("Documento aprovado no protótipo.");
+      if (saveState()) showToast("Documento aprovado e atualizado neste navegador.");
     }
     if (rejectButton) {
       approvals.splice(Number(rejectButton.dataset.reject), 1);
       renderAll();
-      showToast("Solicitação reprovada no protótipo.");
+      if (saveState()) showToast("Solicitação reprovada neste navegador.");
     }
   });
 
@@ -249,7 +321,13 @@
   $("#notifications").addEventListener("click", () => showToast("Você tem 3 alertas para revisar."));
   $("#settingsForm").addEventListener("submit", event => {
     event.preventDefault();
-    showToast("Preferências salvas nesta demonstração.");
+    settings = {
+      companyName: $("#companyName").value.trim(),
+      adminName: $("#adminName").value.trim(),
+      notificationsEnabled: $("#notificationsEnabled").checked
+    };
+    renderSettings();
+    if (saveState()) showToast("Preferências salvas neste navegador.");
   });
 
   function renderAll() {
@@ -258,8 +336,13 @@
     renderCategories();
     renderApprovals();
     renderDeadlines();
-    $("#totalDocuments").textContent = (1284 + documents.length - 6).toLocaleString("pt-BR");
-    $("#pendingMetric").textContent = 15 + approvals.length;
+    renderSettings();
+    $("#dashboardDate").textContent = new Intl.DateTimeFormat("pt-BR", {
+      weekday: "long", day: "numeric", month: "long", year: "numeric"
+    }).format(new Date());
+    $("#totalDocuments").textContent = documents.length.toLocaleString("pt-BR");
+    $("#categoryTotal").textContent = documents.length.toLocaleString("pt-BR");
+    $("#pendingMetric").textContent = approvals.length.toLocaleString("pt-BR");
   }
 
   renderAll();

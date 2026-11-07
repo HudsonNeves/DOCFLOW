@@ -36,7 +36,7 @@
         <button class="nav-link" data-view="settings"><span>⚙</span> Configurações</button>
         <div class="profile">
           <div class="avatar">AC</div>
-          <div><strong>Ana Costa</strong><small>Administradora</small></div>
+          <div><strong id="profileName">Ana Costa</strong><small>Administradora</small></div>
         </div>
       </div>
     </aside>
@@ -58,12 +58,12 @@
         <!-- DASHBOARD -->
         <section class="view active" id="view-dashboard">
           <div class="page-heading">
-            <div><p class="eyebrow">Sábado, 7 de novembro de 2026</p><h1>Bom dia, Ana! <span>☀️</span></h1><p class="subtitle">Aqui está o resumo da gestão documental da sua empresa.</p></div>
+            <div><p class="eyebrow" id="dashboardDate"></p><h1>Bom dia, <span id="administratorGreeting">Ana</span>! <span>☀️</span></h1><p class="subtitle">Aqui está o resumo da gestão documental da sua empresa.</p></div>
             <button class="button primary" data-open-upload>＋ Novo documento</button>
           </div>
 
           <div class="flex-row metric-grid">
-            <article class="panel metric-card"><div class="metric-top"><span>Total de documentos</span><b class="metric-icon blue">▤</b></div><strong id="totalDocuments">1.284</strong><small class="positive">↑ 12% <span>vs. mês anterior</span></small></article>
+            <article class="panel metric-card"><div class="metric-top"><span>Total de documentos</span><b class="metric-icon blue">▤</b></div><strong id="totalDocuments">6</strong><small class="positive">Salvos neste navegador</small></article>
             <article class="panel metric-card"><div class="metric-top"><span>Pendentes</span><b class="metric-icon amber">◷</b></div><strong id="pendingMetric">18</strong><small class="warning-text">Aguardando ação</small></article>
             <article class="panel metric-card"><div class="metric-top"><span>Vencimentos próximos</span><b class="metric-icon orange">⚑</b></div><strong>07</strong><small class="warning-text">Nos próximos 30 dias</small></article>
             <article class="panel metric-card"><div class="metric-top"><span>Organização</span><b class="metric-icon green">✓</b></div><strong>96%</strong><small class="positive">↑ 4% <span>este mês</span></small></article>
@@ -79,7 +79,7 @@
             </article>
             <article class="panel category-panel">
               <div class="panel-heading"><div><h2>Por categoria</h2><p>Distribuição do acervo</p></div></div>
-              <div class="donut-wrap"><div class="donut"><div><strong>1.284</strong><small>Arquivos</small></div></div></div>
+              <div class="donut-wrap"><div class="donut"><div><strong id="categoryTotal">6</strong><small>Arquivos</small></div></div></div>
               <div class="legend"><span>● Contratos <b>40%</b></span><span>● Notas fiscais <b>27%</b></span><span>● Internos <b>18%</b></span><span>● Outros <b>15%</b></span></div>
             </article>
           </div>
@@ -161,9 +161,9 @@
         <section class="view" id="view-settings">
           <div class="page-heading"><div><h1>Configurações</h1><p class="subtitle">Preferências do ambiente de trabalho.</p></div></div>
           <form class="panel settings-panel" id="settingsForm">
-            <label>Nome da empresa<input value="Minha Empresa Ltda."></label>
-            <label>Nome do administrador<input value="Ana Costa"></label>
-            <label class="checkbox-label"><input type="checkbox" checked> Receber notificações de vencimentos e aprovações</label>
+            <label>Nome da empresa<input id="companyName" value="Minha Empresa Ltda." required></label>
+            <label>Nome do administrador<input id="adminName" value="Ana Costa" required></label>
+            <label class="checkbox-label"><input id="notificationsEnabled" type="checkbox" checked> Receber notificações de vencimentos e aprovações</label>
             <button class="button primary">Salvar preferências</button>
           </form>
         </section>
@@ -182,7 +182,7 @@
         <label>Nome do documento<input id="newName" required placeholder="Ex.: Contrato de prestação de serviços.pdf"></label>
         <label>Fornecedor / Responsável<input id="newVendor" required placeholder="Nome da empresa ou pessoa"></label>
         <label>Categoria<select id="newCategory"><option>Contratos</option><option>Notas fiscais</option><option>Documentos internos</option><option>Recibos</option></select></label>
-        <label>Arquivo<input id="newFile" type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg"></label>
+        <label>Arquivo<input id="newFile" type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg"><small class="field-hint">O arquivo não é enviado nem salvo. Apenas o nome será cadastrado neste navegador.</small></label>
         <div class="modal-actions"><button type="button" class="button soft" id="cancelModal">Cancelar</button><button class="button primary">Cadastrar documento</button></div>
       </form>
     </div>

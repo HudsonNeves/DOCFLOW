@@ -22,18 +22,18 @@ docflow/
 
 Não é necessário instalar dependências ou executar servidor.
 
-## Funcionalidades demonstrativas
+## Funcionalidades
 
 - Navegação entre módulos.
 - Dashboard com indicadores e gráficos ilustrativos.
 - Listagem de documentos.
 - Pesquisa e filtros por categoria e status.
-- Cadastro demonstrativo de documentos.
+- Cadastro de documentos com armazenamento local de dados e nome do arquivo.
 - Categorias.
 - Aprovação e reprovação de itens.
 - Agenda de vencimentos.
 - Assistente com respostas simuladas.
-- Configurações demonstrativas.
+- Preferências salvas localmente.
 - Layout responsivo para desktop e celular.
 
 ## Tecnologias
@@ -42,6 +42,8 @@ Não é necessário instalar dependências ou executar servidor.
 - CSS3 com Flexbox
 - JavaScript (Vanilla)
 
-## Importante
+## Limitações da versão frontend
 
-Este pacote é um protótipo de frontend. Os dados são mantidos apenas em memória durante a sessão do navegador. O upload não envia nem armazena arquivos em servidor. Não há autenticação, banco de dados, integração real com IA ou persistência. Essas funcionalidades exigem backend e serviços próprios.
+Esta versão funciona somente no navegador e não depende de backend. Documentos cadastrados, aprovações e preferências são armazenados no armazenamento local do navegador e ficam disponíveis apenas nesse navegador e dispositivo. O upload não envia nem salva o conteúdo dos arquivos: somente os dados do cadastro e o nome do arquivo selecionado são armazenados. Limpar os dados do navegador remove esses registros.
+
+Autenticação, compartilhamento entre usuários ou dispositivos, armazenamento seguro de arquivos e integração real com IA exigem backend e serão tratados em uma etapa futura. O assistente e alguns indicadores são demonstrativos.
