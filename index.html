@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DOCFLOW - Gestão inteligente de documentos">
+  <title>DOCFLOW | Gestão de Documentos</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="DOCFLOW início">
+        <span class="brand-mark">D</span>
+        <span><strong>DOCFLOW</strong><small>GESTÃO INTELIGENTE</small></span>
+      </a>
+
+      <p class="nav-label">WORKSPACE</p>
+      <nav class="navigation" aria-label="Navegação principal">
+        <button class="nav-link active" data-view="dashboard"><span>▦</span> Visão geral</button>
+        <button class="nav-link" data-view="documents"><span>▤</span> Documentos</button>
+        <button class="nav-link" data-view="categories"><span>▧</span> Categorias</button>
+        <button class="nav-link" data-view="approvals"><span>✓</span> Aprovações <span class="nav-count" id="approvalCount">3</span></button>
+        <button class="nav-link" data-view="deadlines"><span>◷</span> Prazos e agenda</button>
+        <button class="nav-link" data-view="assistant"><span>✳</span> Assistente IA <span class="beta">BETA</span></button>
+        <button class="nav-link" data-view="reports"><span>▥</span> Relatórios</button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="storage-card">
+          <strong>Espaço inteligente</strong>
+          <p>Seus documentos organizados em um só lugar.</p>
+          <div class="progress"><span></span></div>
+          <small>Armazenamento <b>68%</b></small>
+        </div>
+        <button class="nav-link" data-view="settings"><span>⚙</span> Configurações</button>
+        <div class="profile">
+          <div class="avatar">AC</div>
+          <div><strong>Ana Costa</strong><small>Administradora</small></div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu" id="mobileMenu" aria-label="Abrir menu">☰</button>
+          <span class="breadcrumb">Workspace <b>/</b> <strong id="breadcrumbCurrent">Visão geral</strong></span>
+        </div>
+        <div class="topbar-actions">
+          <label class="global-search"><span>⌕</span><input id="globalSearch" type="search" placeholder="Buscar documentos..."></label>
+          <button class="icon-button notification" id="notifications" aria-label="Notificações">♧<i></i></button>
+          <div class="avatar top-avatar">AC</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <!-- DASHBOARD -->
+        <section class="view active" id="view-dashboard">
+          <div class="page-heading">
+            <div><p class="eyebrow">Sábado, 7 de novembro de 2026</p><h1>Bom dia, Ana! <span>☀️</span></h1><p class="subtitle">Aqui está o resumo da gestão documental da sua empresa.</p></div>
+            <button class="button primary" data-open-upload>＋ Novo documento</button>
+          </div>
+
+          <div class="flex-row metric-grid">
+            <article class="panel metric-card"><div class="metric-top"><span>Total de documentos</span><b class="metric-icon blue">▤</b></div><strong id="totalDocuments">1.284</strong><small class="positive">↑ 12% <span>vs. mês anterior</span></small></article>
+            <article class="panel metric-card"><div class="metric-top"><span>Pendentes</span><b class="metric-icon amber">◷</b></div><strong id="pendingMetric">18</strong><small class="warning-text">Aguardando ação</small></article>
+            <article class="panel metric-card"><div class="metric-top"><span>Vencimentos próximos</span><b class="metric-icon orange">⚑</b></div><strong>07</strong><small class="warning-text">Nos próximos 30 dias</small></article>
+            <article class="panel metric-card"><div class="metric-top"><span>Organização</span><b class="metric-icon green">✓</b></div><strong>96%</strong><small class="positive">↑ 4% <span>este mês</span></small></article>
+          </div>
+
+          <div class="flex-row dashboard-grid">
+            <article class="panel activity-panel">
+              <div class="panel-heading"><div><h2>Atividade documental</h2><p>Movimentação dos últimos 7 dias</p></div><span class="pill blue-pill">Últimos 7 dias</span></div>
+              <div class="chart" aria-label="Gráfico ilustrativo de atividade semanal">
+                <div class="chart-column"><i style="height:42%"></i><small>Dom</small></div><div class="chart-column"><i style="height:65%"></i><small>Seg</small></div><div class="chart-column"><i style="height:54%"></i><small>Ter</small></div><div class="chart-column"><i style="height:88%"></i><small>Qua</small></div><div class="chart-column"><i style="height:57%"></i><small>Qui</small></div><div class="chart-column"><i style="height:100%"></i><small>Sex</small></div><div class="chart-column"><i style="height:35%"></i><small>Sáb</small></div>
+              </div>
+              <p class="chart-caption">Documentos recebidos e processados</p>
+            </article>
+            <article class="panel category-panel">
+              <div class="panel-heading"><div><h2>Por categoria</h2><p>Distribuição do acervo</p></div></div>
+              <div class="donut-wrap"><div class="donut"><div><strong>1.284</strong><small>Arquivos</small></div></div></div>
+              <div class="legend"><span>● Contratos <b>40%</b></span><span>● Notas fiscais <b>27%</b></span><span>● Internos <b>18%</b></span><span>● Outros <b>15%</b></span></div>
+            </article>
+          </div>
+
+          <div class="flex-row lower-grid">
+            <article class="panel recent-panel">
+              <div class="panel-heading"><div><h2>Documentos recentes</h2><p>Últimos arquivos adicionados</p></div><button class="text-button" data-go="documents">Ver todos →</button></div>
+              <div id="recentList"></div>
+            </article>
+            <article class="panel alerts-panel">
+              <div class="panel-heading"><div><h2>Atenção necessária</h2><p>Itens que precisam de ação</p></div><span class="pill amber-pill">3 alertas</span></div>
+              <div class="alert-item"><span class="alert-icon red">!</span><div><strong>Contrato de locação</strong><small>Vence em 5 dias</small></div></div>
+              <div class="alert-item"><span class="alert-icon amber">◷</span><div><strong>Nota fiscal #2038</strong><small>Aguardando aprovação</small></div></div>
+              <div class="alert-item"><span class="alert-icon blue">▤</span><div><strong>Documento incompleto</strong><small>Cadastro de fornecedor</small></div></div>
+              <button class="button soft full-width" data-go="approvals">Ver pendências</button>
+            </article>
+          </div>
+        </section>
+
+        <!-- DOCUMENTS -->
+        <section class="view" id="view-documents">
+          <div class="page-heading"><div><h1>Documentos</h1><p class="subtitle">Gerencie todos os arquivos da sua empresa.</p></div><button class="button primary" data-open-upload>＋ Adicionar documento</button></div>
+          <div class="panel filter-bar flex-row">
+            <label class="search-field">⌕ <input id="documentSearch" type="search" placeholder="Buscar por nome ou fornecedor..."></label>
+            <select id="categoryFilter" aria-label="Filtrar categoria"><option value="">Todas as categorias</option><option>Contratos</option><option>Notas fiscais</option><option>Documentos internos</option><option>Recibos</option></select>
+            <select id="statusFilter" aria-label="Filtrar status"><option value="">Todos os status</option><option>Organizado</option><option>Pendente</option><option>Em análise</option></select>
+          </div>
+          <article class="panel table-panel">
+            <div class="panel-heading"><div><h2>Todos os documentos <span class="muted" id="documentCount"></span></h2></div><span class="table-note">Ordenado por atualização</span></div>
+            <div class="document-table">
+              <div class="table-row table-head"><span>DOCUMENTO</span><span>CATEGORIA</span><span>DATA</span><span>STATUS</span><span></span></div>
+              <div id="documentList"></div>
+            </div>
+          </article>
+        </section>
+
+        <!-- CATEGORIES -->
+        <section class="view" id="view-categories">
+          <div class="page-heading"><div><h1>Categorias</h1><p class="subtitle">Organize seus documentos por tipo.</p></div></div>
+          <div class="flex-row category-cards" id="categoryCards"></div>
+        </section>
+
+        <!-- APPROVALS -->
+        <section class="view" id="view-approvals">
+          <div class="page-heading"><div><h1>Aprovações</h1><p class="subtitle">Acompanhe documentos que precisam de validação.</p></div></div>
+          <article class="panel" id="approvalList"></article>
+        </section>
+
+        <!-- DEADLINES -->
+        <section class="view" id="view-deadlines">
+          <div class="page-heading"><div><h1>Prazos e agenda</h1><p class="subtitle">Acompanhe vencimentos e compromissos importantes.</p></div></div>
+          <article class="panel deadline-panel"><h2>Próximos vencimentos</h2><div id="deadlineList"></div></article>
+        </section>
+
+        <!-- ASSISTANT -->
+        <section class="view" id="view-assistant">
+          <div class="page-heading"><div><h1>Assistente inteligente</h1><p class="subtitle">Consulte seu acervo em linguagem natural.</p></div></div>
+          <article class="panel assistant-panel">
+            <div class="assistant-intro"><div class="assistant-symbol">✳</div><h2>Como posso ajudar?</h2><p>Faça uma pergunta sobre seus documentos.</p></div>
+            <div id="chatMessages" class="chat-messages"></div>
+            <form id="chatForm" class="chat-form"><input id="chatInput" type="text" placeholder="Ex.: Quais contratos vencem em breve?"><button class="button primary">Enviar ↑</button></form>
+            <div class="suggestions"><button>Contratos próximos do vencimento</button><button>Documentos pendentes</button><button>Notas fiscais cadastradas</button></div>
+            <p class="disclaimer">Protótipo demonstrativo: respostas simuladas, sem conexão real com IA.</p>
+          </article>
+        </section>
+
+        <!-- REPORTS -->
+        <section class="view" id="view-reports">
+          <div class="page-heading"><div><h1>Relatórios</h1><p class="subtitle">Indicadores de desempenho documental.</p></div></div>
+          <div class="flex-row metric-grid report-grid">
+            <article class="panel metric-card"><span>Documentos processados</span><strong>326</strong></article>
+            <article class="panel metric-card"><span>Tempo médio de busca</span><strong>32s</strong></article>
+            <article class="panel metric-card"><span>Aprovações concluídas</span><strong>94%</strong></article>
+          </div>
+          <article class="panel info-panel"><h2>Resumo operacional</h2><p>Os indicadores apresentados são dados fictícios para validação do layout. A integração com dados reais será implementada em uma próxima etapa.</p></article>
+        </section>
+
+        <!-- SETTINGS -->
+        <section class="view" id="view-settings">
+          <div class="page-heading"><div><h1>Configurações</h1><p class="subtitle">Preferências do ambiente de trabalho.</p></div></div>
+          <form class="panel settings-panel" id="settingsForm">
+            <label>Nome da empresa<input value="Minha Empresa Ltda."></label>
+            <label>Nome do administrador<input value="Ana Costa"></label>
+            <label class="checkbox-label"><input type="checkbox" checked> Receber notificações de vencimentos e aprovações</label>
+            <button class="button primary">Salvar preferências</button>
+          </form>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL DE CADASTRO -->
+  <div class="modal-backdrop" id="uploadModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-heading"><div><h2 id="modalTitle">Adicionar documento</h2><p>Preencha as informações para cadastrar um novo arquivo.</p></div><button class="close-modal" id="closeModal" aria-label="Fechar">×</button></div>
+      <form id="uploadForm" class="modal-form">
+        <label>Nome do documento<input id="newName" required placeholder="Ex.: Contrato de prestação de serviços.pdf"></label>
+        <label>Fornecedor / Responsável<input id="newVendor" required placeholder="Nome da empresa ou pessoa"></label>
+        <label>Categoria<select id="newCategory"><option>Contratos</option><option>Notas fiscais</option><option>Documentos internos</option><option>Recibos</option></select></label>
+        <label>Arquivo<input id="newFile" type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg"></label>
+        <div class="modal-actions"><button type="button" class="button soft" id="cancelModal">Cancelar</button><button class="button primary">Cadastrar documento</button></div>
+      </form>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/app.js"></script>
+</body>
+</html>
